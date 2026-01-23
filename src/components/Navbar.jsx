@@ -37,16 +37,16 @@ const Navbar = () => {
                         </button>
                         {isCardsDropdownOpen && (
                             <div className="dropdown-menu glass">
-                                <Link to="/?category=Points" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
+                                <Link to="/cards?category=Points" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
                                     Points Cards
                                 </Link>
-                                <Link to="/?category=Cashback" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
+                                <Link to="/cards?category=Cashback" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
                                     Cashback
                                 </Link>
-                                <Link to="/?category=Low Interest" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
+                                <Link to="/cards?category=Low Interest" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
                                     Low Interest
                                 </Link>
-                                <Link to="/" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
+                                <Link to="/cards" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
                                     All Cards
                                 </Link>
                             </div>
@@ -75,9 +75,9 @@ const Navbar = () => {
                     </Link>
                     <div className="mobile-section">
                         <span className="mobile-section-title">Cards</span>
-                        <Link to="/?category=Points" className="mobile-sublink" onClick={toggleMenu}>Points</Link>
-                        <Link to="/?category=Cashback" className="mobile-sublink" onClick={toggleMenu}>Cashback</Link>
-                        <Link to="/?category=Low Interest" className="mobile-sublink" onClick={toggleMenu}>Low Interest</Link>
+                        <Link to="/cards?category=Points" className="mobile-sublink" onClick={toggleMenu}>Points</Link>
+                        <Link to="/cards?category=Cashback" className="mobile-sublink" onClick={toggleMenu}>Cashback</Link>
+                        <Link to="/cards?category=Low Interest" className="mobile-sublink" onClick={toggleMenu}>Low Interest</Link>
                     </div>
                     <Link to="/hackr" className="btn btn-primary mobile-btn" onClick={toggleMenu}>
                         HACKR

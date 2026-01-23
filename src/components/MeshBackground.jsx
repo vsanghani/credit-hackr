@@ -15,7 +15,7 @@ const MeshBackground = () => {
         // Configuration
         const spacing = 15; // Grid spacing
         const dotBaseSize = 1.5;
-        const dotColor = '#cccccc'; // Subtle grey for dots
+        const dotColor = '#4685ff'; // Using primary color
 
         const resize = () => {
             width = window.innerWidth;

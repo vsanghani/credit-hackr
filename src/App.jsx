@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import MeshBackground from './components/MeshBackground'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
+import CardsPage from './pages/CardsPage'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <main className="main-content">
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/cards" element={<CardsPage />} />
                         <Route path="/cards/:id" element={<CardDetail />} />
                         <Route path="/hackr" element={<HackrCalculator />} />
                         <Route path="/blog" element={<BlogList />} />
