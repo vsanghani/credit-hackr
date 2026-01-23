@@ -19,7 +19,7 @@ const CardDetail = () => {
     return (
         <div className="card-detail-page">
             <div className="container">
-                <Link to="/" className="back-link">
+                <Link to="/" className="back-link glass">
                     <ArrowLeft size={20} /> Back to Cards
                 </Link>
 

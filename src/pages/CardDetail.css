@@ -7,14 +7,20 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #666;
-    font-weight: 500;
+    color: var(--text);
+    font-weight: 600;
     margin-bottom: 2rem;
-    transition: color 0.2s;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .back-link:hover {
-    color: var(--primary);
+    transform: translateX(-5px);
+    background: rgba(255, 255, 255, 1);
+    /* Solid white on hover */
+    box-shadow: var(--shadow-md);
 }
 
 .detail-header {

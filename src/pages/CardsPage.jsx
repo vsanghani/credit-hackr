@@ -69,19 +69,21 @@ const CardsPage = () => {
                 )}
             </div>
 
-            {selectedCategory && <h3 style={{ marginBottom: '1rem' }}>Category: {selectedCategory}</h3>}
+            {selectedCategory && <h3 style={{ marginBottom: '1rem', color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>Category: {selectedCategory}</h3>}
 
-            {filteredCards.length > 0 ? (
-                <div className="cards-grid">
-                    {filteredCards.map(card => (
-                        <Card key={card.id} card={card} />
-                    ))}
-                </div>
-            ) : (
-                <div className="no-results">
-                    <p>No cards found matching your criteria.</p>
-                </div>
-            )}
+            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)' }}>
+                {filteredCards.length > 0 ? (
+                    <div className="cards-grid">
+                        {filteredCards.map(card => (
+                            <Card key={card.id} card={card} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="no-results">
+                        <p>No cards found matching your criteria.</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

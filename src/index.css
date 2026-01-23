@@ -88,9 +88,16 @@ button {
 }
 
 /* Glassmorphism helper */
+/* Glassmorphism helper */
 .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.9);
+    /* Increased opacity for readability */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Stronger border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow for depth */
 }
+
+/* Darker glass for specific use cases if needed, but keeping single source for now */
