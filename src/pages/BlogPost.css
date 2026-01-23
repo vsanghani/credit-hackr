@@ -1,0 +1,122 @@
+.post-banner-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-bottom: -4rem;
+    /* Overlap content */
+}
+
+.post-banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.post-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+    z-index: 1;
+}
+
+.post-banner-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.back-link-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-link-white:hover {
+    color: white;
+}
+
+.post-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    max-width: 900px;
+}
+
+.post-meta-light {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.post-meta-light span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post-container {
+    position: relative;
+    z-index: 3;
+    padding-bottom: 4rem;
+}
+
+.post-content {
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #333;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.9);
+    /* Slightly more opaque for readability */
+}
+
+.post-content h3 {
+    font-size: 1.75rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-banner-container {
+        height: 300px;
+    }
+
+    .post-content {
+        padding: 1.5rem;
+    }
+}

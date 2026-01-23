@@ -24,6 +24,10 @@ const Navbar = () => {
                         Home
                     </Link>
 
+                    <Link to="/blog" className={`nav-link ${location.pathname.startsWith('/blog') ? 'active' : ''}`}>
+                        Blog
+                    </Link>
+
                     <div className="nav-dropdown-container">
                         <button
                             className="nav-link dropdown-trigger"
@@ -65,6 +69,9 @@ const Navbar = () => {
                 <div className="mobile-menu glass">
                     <Link to="/" className="mobile-link" onClick={toggleMenu}>
                         Home
+                    </Link>
+                    <Link to="/blog" className="mobile-link" onClick={toggleMenu}>
+                        Blog
                     </Link>
                     <div className="mobile-section">
                         <span className="mobile-section-title">Cards</span>

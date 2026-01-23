@@ -6,6 +6,8 @@ import CardDetail from './pages/CardDetail'
 import HackrCalculator from './pages/HackrCalculator'
 import Footer from './components/Footer'
 import MeshBackground from './components/MeshBackground'
+import BlogList from './pages/BlogList'
+import BlogPost from './pages/BlogPost'
 import './App.css'
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/cards/:id" element={<CardDetail />} />
                         <Route path="/hackr" element={<HackrCalculator />} />
+                        <Route path="/blog" element={<BlogList />} />
+                        <Route path="/blog/:id" element={<BlogPost />} />
                     </Routes>
                 </main>
                 <Footer />
