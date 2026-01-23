@@ -5,12 +5,14 @@ import Home from './pages/Home'
 import CardDetail from './pages/CardDetail'
 import HackrCalculator from './pages/HackrCalculator'
 import Footer from './components/Footer'
+import MeshBackground from './components/MeshBackground'
 import './App.css'
 
 function App() {
     return (
         <Router>
             <div className="app-container">
+                <MeshBackground />
                 <Navbar />
                 <main className="main-content">
                     <Routes>
