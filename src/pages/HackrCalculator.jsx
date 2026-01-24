@@ -11,19 +11,15 @@ const HackrCalculator = () => {
 
     const calculatePoints = () => {
         if (!selectedCard || !monthlySpend) return 0;
-
-        // Simple parsing logic: extract number from string "1.5 points" -> 1.5
-        // For simplicity in this mock, we'll assume a standard rate if parsing fails or specific logic per card type
-        let rate = 1;
-        if (selectedCard.pointsRate.includes('1.5')) rate = 1.5;
-        else if (selectedCard.pointsRate.includes('1.25')) rate = 1.25;
-        else if (selectedCard.pointsRate.includes('N/A')) rate = 0;
-
+        // Use defined earnRate or default to 0 if not present
+        const rate = selectedCard.earnRate !== undefined ? selectedCard.earnRate : 0;
         return Math.floor(parseInt(monthlySpend) * rate * 12); // Yearly points
     };
 
     const yearlyPoints = calculatePoints();
-    const estimatedValue = (yearlyPoints * 0.008).toFixed(2); // estimated 0.8 cents per point value
+    // Use defined pointValue or default to 0
+    const valPerPoint = selectedCard?.pointValue || 0;
+    const estimatedValue = (yearlyPoints * valPerPoint).toFixed(2);
     const netValue = (parseFloat(estimatedValue) - (selectedCard?.fees.annual || 0)).toFixed(2);
 
     return (
@@ -91,7 +87,7 @@ const HackrCalculator = () => {
                                 <div className="result-divider"></div>
 
                                 <div className="result-row">
-                                    <span className="result-label">Est. Value (0.8c/pt)</span>
+                                    <span className="result-label">Est. Value ({(valPerPoint * 100).toFixed(2)}c/pt)</span>
                                     <span className="result-value">${estimatedValue}</span>
                                 </div>
                                 <div className="result-row negative">

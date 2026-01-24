@@ -13,6 +13,8 @@ export const cardsData = [
         },
         interestRate: 20.74,
         pointsRate: "1.5% Cashback",
+        earnRate: 1.5, // 1.5 cents equivalent per dollar
+        pointValue: 0.01, // 1 point = 1 cent
         benefits: [
             "Smartphone Screen Insurance",
             "Emergency Card Replacement",
@@ -34,6 +36,8 @@ export const cardsData = [
         },
         interestRate: 20.74,
         pointsRate: "1.25 Qantas Pts / $1",
+        earnRate: 1.25,
+        pointValue: 0.012, // approx 1.2 cents per Qantas point
         benefits: [
             "$450 Qantas Travel Credit each year",
             "Comp. International Travel Insurance",
@@ -54,6 +58,8 @@ export const cardsData = [
         },
         interestRate: 19.99,
         pointsRate: "1.25 Pts / $1",
+        earnRate: 1.25,
+        pointValue: 0.005, // Altitude points approx 0.5 cents
         benefits: [
             "Unlimited Airport Lounge Access (Priority Pass)",
             "Comprehensive Travel Insurance",
@@ -74,6 +80,8 @@ export const cardsData = [
         },
         interestRate: 19.99,
         pointsRate: "1.25 Pts / $1",
+        earnRate: 1.25,
+        pointValue: 0.005, // NAB Rewards approx 0.5 cents
         benefits: [
             "Double points at Myer, David Jones, Bunnings",
             "Complimentary Overseas Travel Insurance",
@@ -94,6 +102,8 @@ export const cardsData = [
         },
         interestRate: 20.24,
         pointsRate: "2 Pts / $1",
+        earnRate: 2,
+        pointValue: 0.004, // ANZ Rewards approx 0.4 cents
         benefits: [
             "$100 Cash back offer",
             "Complimentary Travel Insurances",
@@ -114,6 +124,8 @@ export const cardsData = [
         },
         interestRate: 20.74,
         pointsRate: "1.25 Velocity Pts / $1",
+        earnRate: 1.25,
+        pointValue: 0.01, // Velocity approx 1.0 cents
         benefits: [
             "Complimentary return domestic flight each year",
             "2 Virgin Australia Lounge passes",
@@ -136,6 +148,8 @@ export const cardsData = [
         },
         interestRate: 9.90,
         pointsRate: "N/A",
+        earnRate: 0,
+        pointValue: 0,
         benefits: [
             "0% Foreign Transaction Fees",
             "No late payment fees",
@@ -156,6 +170,8 @@ export const cardsData = [
         },
         interestRate: 10.99,
         pointsRate: "N/A",
+        earnRate: 0,
+        pointValue: 0,
         benefits: [
             "$0 Annual Fee",
             "Access to Amex Offers",
@@ -176,6 +192,8 @@ export const cardsData = [
         },
         interestRate: 12.99,
         pointsRate: "0.5 Flybuys / $1",
+        earnRate: 0.5,
+        pointValue: 0.005, // Flybuys 0.5 cents
         benefits: [
             "$0 Annual Fee",
             "Collect Flybuys points",
@@ -198,6 +216,8 @@ export const cardsData = [
         },
         interestRate: 19.99,
         pointsRate: "0.5 Flybuys / $1",
+        earnRate: 0.5,
+        pointValue: 0.005,
         benefits: [
             "No Annual Fee",
             "Free delivery on Coles Online orders over $50",
@@ -218,6 +238,8 @@ export const cardsData = [
         },
         interestRate: 12.99,
         pointsRate: "N/A",
+        earnRate: 0,
+        pointValue: 0,
         benefits: [
             "No International Transaction Fees (eligibility applies)",
             "Low annual fee",
@@ -238,6 +260,8 @@ export const cardsData = [
         },
         interestRate: 0,
         pointsRate: "Cashback at partners",
+        earnRate: 1, // Assumed rate for calculator interactions, though effectively varies
+        pointValue: 0.01, // 1% approx return value
         benefits: [
             "0% Interest rate details",
             "Earn CommBank Awards cashback at partners",
@@ -258,11 +282,146 @@ export const cardsData = [
         },
         interestRate: 20.99,
         pointsRate: "2 Pts / $1 at Kogan",
+        earnRate: 1, // Base rate on general spend is often lower, but let's say 1 for calculator simplicity on general
+        pointValue: 0.005, // Kogan credit value
         benefits: [
             "No Annual Fee",
             "Comp. Kogan First Membership",
             "Fast approval process"
         ],
         applyLink: "https://www.koganmoney.com.au/credit-cards/"
+    },
+    // --- NEW CARDS ---
+    {
+        id: 14,
+        name: "CBA Ultimate Awards",
+        image: "https://placehold.co/600x400/ffcc00/000000?text=CBA+Ultimate+Awards",
+        category: "Points",
+        feature: "100k Bonus Awards Points",
+        description: "No monthly fee if you spend $2,500+ in your statement period.",
+        fees: {
+            annual: 420, // $35/month
+            foreign: 3
+        },
+        interestRate: 20.24,
+        pointsRate: "3 Pts / $1 Intl",
+        earnRate: 1.0,
+        pointValue: 0.004, // CBA Awards ~0.4c
+        benefits: [
+            "No monthly fee with spend criteria",
+            "International Travel Insurance",
+            "3 pts/$1 on Intl Spend"
+        ],
+        applyLink: "https://www.commbank.com.au/credit-cards/ultimate-awards.html"
+    },
+    {
+        id: 15,
+        name: "Virgin Money High Flyer",
+        image: "https://placehold.co/600x400/cc0000/ffffff?text=Virgin+Money+High+Flyer",
+        category: "Points",
+        feature: "$129 Gift Card + Points",
+        description: "Earn Velocity Points directly with premium travel perks.",
+        fees: {
+            annual: 289,
+            foreign: 3
+        },
+        interestRate: 20.74,
+        pointsRate: "1 Velocity Pt / $1",
+        earnRate: 1.0,
+        pointValue: 0.01,
+        benefits: [
+            "$129 Virgin Australia Gift Voucher annually",
+            "2 Complimentary Lounge Passes",
+            "Travel Insurance included"
+        ],
+        applyLink: "https://virginmoney.com.au/credit-card/high-flyer-credit-card"
+    },
+    {
+        id: 16,
+        name: "Bankwest Qantas World",
+        image: "https://placehold.co/600x400/ff6600/ffffff?text=Bankwest+Qantas+World",
+        category: "Points",
+        feature: "90k Bonus Qantas Points",
+        description: "A premium card with 0% foreign transaction fees.",
+        fees: {
+            annual: 250,
+            foreign: 0
+        },
+        interestRate: 19.99,
+        pointsRate: "1 Qantas Pt / $1",
+        earnRate: 1.0,
+        pointValue: 0.012,
+        benefits: [
+            "0% Foreign Transaction Fees",
+            "Complimentary Travel Insurance",
+            "Concierge Service"
+        ],
+        applyLink: "https://www.bankwest.com.au/personal/credit-cards/qantas-world-mastercard"
+    },
+    {
+        id: 17,
+        name: "ANZ Frequent Flyer Black",
+        image: "https://placehold.co/600x400/004165/ffffff?text=ANZ+FF+Black",
+        category: "Points",
+        feature: "130k Bonus Qantas Points",
+        description: "Earn Qantas Points on your everyday spending with ANZ's premium card.",
+        fees: {
+            annual: 425,
+            foreign: 3
+        },
+        interestRate: 20.24,
+        pointsRate: "1 Qantas Pt / $1",
+        earnRate: 1.0,
+        pointValue: 0.012,
+        benefits: [
+            "$255 back or Gift Card offer",
+            "2 Qantas Club invitations",
+            "Extended Warranty Insurance"
+        ],
+        applyLink: "https://www.anz.com.au/personal/credit-cards/frequent-flyer/black/"
+    },
+    {
+        id: 18,
+        name: "Citi PremierCard",
+        image: "https://placehold.co/600x400/003399/ffffff?text=Citi+PremierCard",
+        category: "Points",
+        feature: "150k Bonus Citi Points",
+        description: "Flexible rewards with a high points earning cap.",
+        fees: {
+            annual: 300,
+            foreign: 3.4
+        },
+        interestRate: 21.49,
+        pointsRate: "2 Pts / $1",
+        earnRate: 2.0,
+        pointValue: 0.004, // Citi rewards ~0.4c
+        benefits: [
+            "Linked Dining Program",
+            "Complimentary Mobile Phone Insurance",
+            "Global Travel Insurance"
+        ],
+        applyLink: "https://www1.citibank.com.au/credit-cards/premier-credit-card"
+    },
+    {
+        id: 19,
+        name: "Westpac Altitude Qantas Black",
+        image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Westpac+Alt+Qantas+Black",
+        category: "Points",
+        feature: "90k Bonus Qantas Points",
+        description: "The dedicated Qantas version of the Altitude Black card.",
+        fees: {
+            annual: 295,
+            foreign: 3
+        },
+        interestRate: 19.99,
+        pointsRate: "0.75 Qantas Pt / $1",
+        earnRate: 0.75,
+        pointValue: 0.012,
+        benefits: [
+            "2 Qantas Club Lounge invitations",
+            "Complimentary Insurances",
+            "Westpac Concierge"
+        ],
+        applyLink: "https://www.westpac.com.au/personal-banking/credit-cards/reward/altitude-qantas-black/"
     }
 ];
