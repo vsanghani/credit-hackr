@@ -22,7 +22,17 @@ const Footer = () => {
                 </div>
                 <div className="footer-disclaimer">
                     <p>© 2024 Credit Hackr. All rights reserved. Information provided is for comparison purposes only.</p>
-                    <p className="footer-credit">Built with ❤️ by <a href="https://www.vrtxlabs.tech" target="_blank" rel="noopener noreferrer">Vrtx Labs</a></p>
+                    <p className="footer-credit">
+                        built and managed by{' '}
+                        <a
+                            href="https://vrtxlabs.tech"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="https://vrtxlabs.tech"
+                        >
+                            VRTX Labs
+                        </a>
+                    </p>
                 </div>
             </div>
         </footer>
