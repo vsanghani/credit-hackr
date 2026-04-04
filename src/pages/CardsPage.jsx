@@ -2,10 +2,11 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import Card from '../components/Card';
-import { cardsData } from '../data/cardsData';
+import { useCards } from '../context/CardsContext';
 import './Home.css'; // Reusing Home styles for grid
 
 const CardsPage = () => {
+    const { cards } = useCards();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const location = useLocation();
@@ -22,21 +23,21 @@ const CardsPage = () => {
     }, [location.search]);
 
     const filteredCards = useMemo(() => {
-        return cardsData.filter(card => {
-            // Filter by search query
+        const q = searchQuery.toLowerCase();
+        return cards.filter((card) => {
+            const issuer = (card.issuer || '').toLowerCase();
             const matchesSearch =
-                card.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                card.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                card.feature.toLowerCase().includes(searchQuery.toLowerCase());
+                !q ||
+                card.name.toLowerCase().includes(q) ||
+                card.description.toLowerCase().includes(q) ||
+                card.feature.toLowerCase().includes(q) ||
+                issuer.includes(q);
 
-            // Filter by category if selected
-            const matchesCategory = selectedCategory
-                ? card.category === selectedCategory
-                : true;
+            const matchesCategory = selectedCategory ? card.category === selectedCategory : true;
 
             return matchesSearch && matchesCategory;
         });
-    }, [searchQuery, selectedCategory]);
+    }, [cards, searchQuery, selectedCategory]);
 
     return (
         <div className="cards-page container">

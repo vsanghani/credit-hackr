@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calculator, DollarSign, Award } from 'lucide-react';
-import { cardsData } from '../data/cardsData';
+import { useCards } from '../context/CardsContext';
 import './HackrCalculator.css';
 
 const HackrCalculator = () => {
-    const [selectedCardId, setSelectedCardId] = useState(cardsData[0]?.id || '');
+    const { cards } = useCards();
+    const [selectedCardId, setSelectedCardId] = useState('');
     const [monthlySpend, setMonthlySpend] = useState('');
 
-    const selectedCard = cardsData.find(c => c.id === parseInt(selectedCardId));
+    useEffect(() => {
+        if (!cards.length) return;
+        const n = parseInt(selectedCardId, 10);
+        const valid = cards.some((c) => c.id === n);
+        if (!selectedCardId || !valid) setSelectedCardId(String(cards[0].id));
+    }, [cards, selectedCardId]);
+
+    const selectedCard = cards.find((c) => c.id === parseInt(selectedCardId, 10));
 
     const calculatePoints = () => {
         if (!selectedCard || !monthlySpend) return 0;
@@ -42,8 +50,10 @@ const HackrCalculator = () => {
                                 onChange={(e) => setSelectedCardId(e.target.value)}
                                 className="calc-select"
                             >
-                                {cardsData.map(card => (
-                                    <option key={card.id} value={card.id}>{card.name} (${card.fees.annual}/yr)</option>
+                                {cards.map((card) => (
+                                    <option key={card.id} value={card.id}>
+                                        {card.name} (${card.fees.annual}/yr)
+                                    </option>
                                 ))}
                             </select>
                         </div>

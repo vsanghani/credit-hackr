@@ -49,3 +49,9 @@
         transform: translate(30px, 30px) scale(1.05);
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .gradient-orb {
+        animation: none;
+    }
+}
