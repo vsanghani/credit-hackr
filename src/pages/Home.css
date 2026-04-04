@@ -18,15 +18,18 @@
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
     margin-bottom: 1rem;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
 }
 
 .hero p {
-    font-size: 1.25rem;
-    color: #555;
-    /* Slightly lighter text, check strict colors */
+    font-size: clamp(1.05rem, 1vw + 0.9rem, 1.25rem);
+    color: var(--text-muted);
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 2rem;
 }
 
@@ -37,6 +40,12 @@
     display: flex;
     align-items: center;
     border-radius: var(--radius-full);
+    transition: box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+
+.huge-search:focus-within {
+    box-shadow: 0 8px 28px rgba(59, 124, 255, 0.18);
+    transform: translateY(-1px);
 }
 
 .huge-search input {

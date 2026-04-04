@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ChevronRight, Check } from 'lucide-react';
+import { Search, ChevronRight } from 'lucide-react';
 import Card from '../components/Card';
-import { cardsData } from '../data/cardsData';
+import { useCards } from '../context/CardsContext';
 import './Home.css';
 
 const Home = () => {
+    const { cards } = useCards();
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
@@ -16,8 +17,7 @@ const Home = () => {
         }
     };
 
-    // Get top 3 cards for "Popular Cards" section
-    const popularCards = cardsData.slice(0, 3);
+    const popularCards = cards.slice(0, 3);
 
     return (
         <div className="home-page">

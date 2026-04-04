@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Check, AlertCircle } from 'lucide-react';
-import { cardsData } from '../data/cardsData';
+import { useCards } from '../context/CardsContext';
 import './CardDetail.css';
 
 const CardDetail = () => {
     const { id } = useParams();
-    const card = cardsData.find(c => c.id === parseInt(id));
+    const { cards } = useCards();
+    const card = cards.find((c) => c.id === parseInt(id, 10));
 
     if (!card) {
         return (
@@ -19,7 +20,7 @@ const CardDetail = () => {
     return (
         <div className="card-detail-page">
             <div className="container">
-                <Link to="/" className="back-link glass">
+                <Link to="/cards" className="back-link glass">
                     <ArrowLeft size={20} /> Back to Cards
                 </Link>
 

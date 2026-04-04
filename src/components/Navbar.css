@@ -30,8 +30,8 @@
 
 .nav-link {
     font-weight: 500;
-    color: #555;
-    transition: color 0.2s;
+    color: var(--text-muted);
+    transition: color 0.2s var(--ease-out);
     display: flex;
     align-items: center;
     gap: 0.25rem;
