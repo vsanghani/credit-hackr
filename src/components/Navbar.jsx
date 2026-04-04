@@ -36,7 +36,7 @@ const Navbar = () => {
                             Cards <ChevronDown size={16} />
                         </button>
                         {isCardsDropdownOpen && (
-                            <div className="dropdown-menu glass">
+                            <div className="dropdown-menu">
                                 <Link to="/cards?category=Points" className="dropdown-item" onClick={() => setIsCardsDropdownOpen(false)}>
                                     Points Cards
                                 </Link>
