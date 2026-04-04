@@ -57,6 +57,13 @@
     line-height: 1.5;
 }
 
+.cookie-consent-text a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+}
+
 .cookie-consent-btn {
     flex-shrink: 0;
     align-self: center;

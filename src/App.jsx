@@ -8,7 +8,10 @@ import MeshBackground from './components/MeshBackground'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
 import CardsPage from './pages/CardsPage'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfUse from './pages/TermsOfUse'
 import CookieConsent from './components/CookieConsent'
+import ScrollToTop from './components/ScrollToTop'
 import { CardsProvider } from './context/CardsContext'
 import './App.css'
 
@@ -16,6 +19,7 @@ function App() {
     return (
         <CardsProvider>
             <Router>
+                <ScrollToTop />
                 <div className="app-container">
                     <MeshBackground />
                     <Navbar />
@@ -27,6 +31,8 @@ function App() {
                             <Route path="/hackr" element={<HackrCalculator />} />
                             <Route path="/blog" element={<BlogList />} />
                             <Route path="/blog/:id" element={<BlogPost />} />
+                            <Route path="/privacy" element={<PrivacyPolicy />} />
+                            <Route path="/terms" element={<TermsOfUse />} />
                         </Routes>
                     </main>
                     <Footer />

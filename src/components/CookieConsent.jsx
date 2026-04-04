@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Cookie } from 'lucide-react';
 import './CookieConsent.css';
 
@@ -36,8 +37,8 @@ const CookieConsent = () => {
                     <strong>Cookies &amp; privacy</strong>
                     <p>
                         We use essential cookies so the site works, and optional analytics may apply depending on how
-                        we configure the deployment. By continuing, you agree to our use of cookies as described in this
-                        notice.
+                        we configure the deployment. By continuing, you agree to our use of cookies as described in our{' '}
+                        <Link to="/privacy">Privacy Policy</Link>.
                     </p>
                 </div>
                 <button type="button" className="btn btn-primary cookie-consent-btn" onClick={accept}>
