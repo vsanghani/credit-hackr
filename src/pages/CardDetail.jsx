@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Check, AlertCircle } from 'lucide-react';
 import { useCards } from '../context/CardsContext';
+import CardArt from '../components/CardArt';
 import './CardDetail.css';
 
 const CardDetail = () => {
@@ -27,7 +28,7 @@ const CardDetail = () => {
                 {/* Header Section */}
                 <div className="detail-header glass">
                     <div className="detail-image-wrapper">
-                        <img src={card.image} alt={card.name} />
+                        <CardArt card={card} variant="detail" />
                     </div>
                     <div className="detail-title-section">
                         <span className="detail-category">{card.category}</span>

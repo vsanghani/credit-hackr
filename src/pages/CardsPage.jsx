@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import Card from '../components/Card';
 import { useCards } from '../context/CardsContext';
-import './Home.css'; // Reusing Home styles for grid
+import './Home.css';
+import './CardsPage.css';
 
 const CardsPage = () => {
     const { cards } = useCards();
@@ -41,38 +42,43 @@ const CardsPage = () => {
 
     return (
         <div className="cards-page container">
-            <div className="section-header" style={{ marginTop: '2rem' }}>
+            <div className="cards-page__toolbar">
                 <h2>Credit Cards</h2>
 
-                {/* Inline Search for this page */}
-                <div className="search-bar glass" style={{ maxWidth: '400px', margin: '0 1rem', padding: '0.5rem 1rem' }}>
-                    <Search className="search-icon" size={16} />
+                <label className="cards-filter-pill" htmlFor="cards-filter-input">
+                    <Search className="cards-filter-pill__icon" size={18} strokeWidth={2} aria-hidden />
                     <input
-                        type="text"
-                        placeholder="Filter cards..."
+                        id="cards-filter-input"
+                        type="search"
+                        enterKeyHint="search"
+                        autoComplete="off"
+                        aria-label="Filter credit cards by name, bank, or benefit"
+                        placeholder="Search name, bank, or benefit…"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{ fontSize: '1rem' }}
                     />
-                </div>
+                </label>
 
                 {(searchQuery || selectedCategory) && (
                     <button
-                        className="btn btn-secondary btn-sm"
+                        type="button"
+                        className="btn btn-secondary btn-sm cards-page__clear"
                         onClick={() => {
                             setSearchQuery('');
                             setSelectedCategory(null);
                             window.history.pushState({}, '', '/cards');
                         }}
                     >
-                        Clear Filters
+                        Clear filters
                     </button>
                 )}
             </div>
 
-            {selectedCategory && <h3 style={{ marginBottom: '1rem', color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>Category: {selectedCategory}</h3>}
+            {selectedCategory && (
+                <p className="cards-page__category">Showing: {selectedCategory}</p>
+            )}
 
-            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)' }}>
+            <div className="glass cards-page__grid-wrap">
                 {filteredCards.length > 0 ? (
                     <div className="cards-grid">
                         {filteredCards.map(card => (

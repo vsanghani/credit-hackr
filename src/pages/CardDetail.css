@@ -41,10 +41,12 @@
     margin: 0 auto;
 }
 
-.detail-image-wrapper img {
+.detail-image-wrapper .card-art,
+.detail-image-wrapper .card-art-photo {
     width: 100%;
     height: auto;
     display: block;
+    aspect-ratio: 400 / 252;
 }
 
 .detail-title-section {

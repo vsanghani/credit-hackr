@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import CardArt from './CardArt';
 import './Card.css';
 
 const Card = ({ card }) => {
     return (
         <div className="card glass">
             <div className="card-image-wrapper">
-                <img src={card.image} alt={card.name} className="card-image" />
+                <CardArt card={card} variant="grid" className="card-image" decorative />
                 <div className="card-category-badge">{card.category}</div>
             </div>
 

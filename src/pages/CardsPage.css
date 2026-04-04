@@ -1,0 +1,124 @@
+.cards-page {
+    padding-bottom: 3rem;
+}
+
+.cards-page__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.cards-page__toolbar h2 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: min(100%, 12rem);
+}
+
+/* Pill: one surface; input is visually part of it, not a nested box */
+.cards-filter-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: 1 1 16rem;
+    max-width: 22rem;
+    min-height: 2.75rem;
+    padding: 0.35rem 1rem 0.35rem 0.9rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px) saturate(1.15);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    box-shadow: var(--shadow-sm);
+    transition:
+        border-color 0.2s var(--ease-out),
+        box-shadow 0.2s var(--ease-out),
+        background 0.2s var(--ease-out);
+}
+
+.cards-filter-pill:focus-within {
+    border-color: rgba(59, 124, 255, 0.45);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 0 0 3px rgba(59, 124, 255, 0.15), var(--shadow-md);
+}
+
+.cards-filter-pill .cards-filter-pill__icon {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.cards-filter-pill input {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0.4rem 0;
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0;
+    box-shadow: none !important;
+    outline: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.cards-filter-pill input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.55;
+    font-weight: 400;
+}
+
+.cards-filter-pill input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Hide default search field chrome so the pill stays one piece */
+.cards-filter-pill input[type='search']::-webkit-search-decoration,
+.cards-filter-pill input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.cards-page__clear {
+    flex-shrink: 0;
+}
+
+.cards-page__category {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.cards-page__grid-wrap {
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+}
+
+.cards-page .no-results {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .cards-page__toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cards-filter-pill {
+        max-width: none;
+    }
+}
