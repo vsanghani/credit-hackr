@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calculator, DollarSign, Award } from 'lucide-react';
 import { useCards } from '../context/CardsContext';
+import CardArt from '../components/CardArt';
 import './HackrCalculator.css';
 
 const HackrCalculator = () => {
@@ -74,7 +75,7 @@ const HackrCalculator = () => {
 
                         {selectedCard && (
                             <div className="calc-card-preview">
-                                <img src={selectedCard.image} alt={selectedCard.name} />
+                                <CardArt card={selectedCard} variant="grid" decorative />
                                 <div className="calc-card-info">
                                     <strong>{selectedCard.name}</strong>
                                     <span>{selectedCard.pointsRate}</span>

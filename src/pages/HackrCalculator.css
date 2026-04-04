@@ -90,12 +90,6 @@
     gap: 1rem;
 }
 
-.calc-card-preview img {
-    width: 60px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 4px;
-}
 
 .calc-card-info {
     display: flex;

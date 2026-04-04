@@ -3,7 +3,6 @@ export const cardsCore = [
     {
         id: 13,
         name: "Amex Cashback Gold",
-        image: "https://placehold.co/600x400/d4af37/ffffff?text=Amex+Cashback+Gold",
         category: "Cashback",
         feature: "5% Cashback for first 3 months",
         description: "The gold standard for cashback. Earn real money back on every purchase.",
@@ -26,7 +25,6 @@ export const cardsCore = [
     {
         id: 1,
         name: "Qantas Amex Ultimate",
-        image: "https://placehold.co/600x400/e60000/ffffff?text=Qantas+Amex+Ultimate",
         category: "Points",
         feature: "Up to 100k Bonus Qantas Points",
         description: "A top-tier card for serious Qantas Frequent Flyers. Includes a $450 yearly travel credit.",
@@ -48,7 +46,6 @@ export const cardsCore = [
     {
         id: 2,
         name: "Westpac Altitude Black",
-        image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Westpac+Altitude+Black",
         category: "Points",
         feature: "120k Bonus Altitude Points",
         description: "Luxury travel perks with your choice of Altitude, Qantas, or Velocity rewards programs.",
@@ -70,7 +67,6 @@ export const cardsCore = [
     {
         id: 3,
         name: "NAB Rewards Signature",
-        image: "https://placehold.co/600x400/bf0d3e/ffffff?text=NAB+Rewards+Signature",
         category: "Points",
         feature: "120k Bonus Rewards Points",
         description: "Earn double points on purchases at major hardware and department stores.",
@@ -92,7 +88,6 @@ export const cardsCore = [
     {
         id: 4,
         name: "ANZ Rewards Black",
-        image: "https://placehold.co/600x400/004165/ffffff?text=ANZ+Rewards+Black",
         category: "Points",
         feature: "180k Bonus Rewards Points",
         description: "Huge bonus points offer and significant cashback benefits for new customers.",
@@ -114,7 +109,6 @@ export const cardsCore = [
     {
         id: 5,
         name: "Amex Velocity Platinum",
-        image: "https://placehold.co/600x400/006fcf/ffffff?text=Amex+Velocity+Platinum",
         category: "Points",
         feature: "100k Bonus Velocity Points",
         description: "The fastest way to earn Velocity points on everyday spend. Includes a free domestic flight.",
@@ -138,7 +132,6 @@ export const cardsCore = [
     {
         id: 6,
         name: "Westpac Lite Card",
-        image: "https://placehold.co/600x400/da1710/ffffff?text=Westpac+Lite",
         category: "Low Interest",
         feature: "Super Low 9.90% p.a. rate",
         description: "No foreign transaction fees and a rock-bottom interest rate for purchases.",
@@ -160,7 +153,6 @@ export const cardsCore = [
     {
         id: 7,
         name: "Amex Low Rate Card",
-        image: "https://placehold.co/600x400/2671b9/ffffff?text=Amex+Low+Rate",
         category: "Low Interest",
         feature: "Low 10.99% p.a. rate",
         description: "A rare low-rate card that carries no annual fee at all.",
@@ -182,7 +174,6 @@ export const cardsCore = [
     {
         id: 8,
         name: "Coles Low Rate Mastercard",
-        image: "https://placehold.co/600x400/e01a22/ffffff?text=Coles+Low+Rate",
         category: "Low Interest",
         feature: "12.99% p.a. purchase rate",
         description: "Save on interest while collecting Flybuys points on your grocery shop.",
@@ -206,7 +197,6 @@ export const cardsCore = [
     {
         id: 9,
         name: "Coles No Annual Fee",
-        image: "https://placehold.co/600x400/de1f26/ffffff?text=Coles+No+Fee",
         category: "Cashback",
         feature: "$0 Annual Fee Forever",
         description: "The budget-friendly way to boost your Flybuys balance without paying fees.",
@@ -228,7 +218,6 @@ export const cardsCore = [
     {
         id: 10,
         name: "ING Orange One Low Rate",
-        image: "https://placehold.co/600x400/ff6200/ffffff?text=ING+Orange+One",
         category: "Low Interest",
         feature: "12.99% p.a. variable rate",
         description: "A straightforward card from Australia's most recommended bank.",
@@ -250,7 +239,6 @@ export const cardsCore = [
     {
         id: 11,
         name: "CommBank Neo",
-        image: "https://placehold.co/600x400/ffcc00/000000?text=CommBank+Neo",
         category: "Cashback",
         feature: "0% Interest - Fixed Fee",
         description: "A subscription-style credit card. Pay a simple monthly fee and never pay interest.",
@@ -272,7 +260,6 @@ export const cardsCore = [
     {
         id: 12,
         name: "Kogan Money Black",
-        image: "https://placehold.co/600x400/000000/ffffff?text=Kogan+Money+Black",
         category: "Points",
         feature: "$400 Kogan Credit Offer",
         description: "Earn rewards on your Kogan.com shopping and everywhere else.",
@@ -295,7 +282,6 @@ export const cardsCore = [
     {
         id: 14,
         name: "CBA Ultimate Awards",
-        image: "https://placehold.co/600x400/ffcc00/000000?text=CBA+Ultimate+Awards",
         category: "Points",
         feature: "100k Bonus Awards Points",
         description: "No monthly fee if you spend $2,500+ in your statement period.",
@@ -317,7 +303,6 @@ export const cardsCore = [
     {
         id: 15,
         name: "Virgin Money High Flyer",
-        image: "https://placehold.co/600x400/cc0000/ffffff?text=Virgin+Money+High+Flyer",
         category: "Points",
         feature: "$129 Gift Card + Points",
         description: "Earn Velocity Points directly with premium travel perks.",
@@ -339,7 +324,6 @@ export const cardsCore = [
     {
         id: 16,
         name: "Bankwest Qantas World",
-        image: "https://placehold.co/600x400/ff6600/ffffff?text=Bankwest+Qantas+World",
         category: "Points",
         feature: "90k Bonus Qantas Points",
         description: "A premium card with 0% foreign transaction fees.",
@@ -361,7 +345,6 @@ export const cardsCore = [
     {
         id: 17,
         name: "ANZ Frequent Flyer Black",
-        image: "https://placehold.co/600x400/004165/ffffff?text=ANZ+FF+Black",
         category: "Points",
         feature: "130k Bonus Qantas Points",
         description: "Earn Qantas Points on your everyday spending with ANZ's premium card.",
@@ -383,7 +366,6 @@ export const cardsCore = [
     {
         id: 18,
         name: "Citi PremierCard",
-        image: "https://placehold.co/600x400/003399/ffffff?text=Citi+PremierCard",
         category: "Points",
         feature: "150k Bonus Citi Points",
         description: "Flexible rewards with a high points earning cap.",
@@ -405,7 +387,6 @@ export const cardsCore = [
     {
         id: 19,
         name: "Westpac Altitude Qantas Black",
-        image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Westpac+Alt+Qantas+Black",
         category: "Points",
         feature: "90k Bonus Qantas Points",
         description: "The dedicated Qantas version of the Altitude Black card.",

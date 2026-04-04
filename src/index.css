@@ -102,6 +102,11 @@ a:focus-visible {
     background-color: #e5e5e5;
 }
 
+.btn-sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+}
+
 /* Glassmorphism helper */
 /* Glassmorphism helper */
 .glass {
