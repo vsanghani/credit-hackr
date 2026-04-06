@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { applyTermsSeo, resetToSiteDefaults } from '../utils/seo';
 import './LegalDocument.css';
 
 const TermsOfUse = () => {
+    useEffect(() => {
+        applyTermsSeo();
+        return () => resetToSiteDefaults();
+    }, []);
+
     return (
         <div className="legal-page">
             <div className="container">

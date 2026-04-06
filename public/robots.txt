@@ -1,0 +1,36 @@
+# Credit Hackr — allow search engines and AI crawlers to index public pages.
+# Replace YOUR_PRODUCTION_ORIGIN below with your live site URL (https://…) for sitemap discovery.
+
+User-agent: *
+Allow: /
+
+# Common AI / research crawlers (policy: allow public marketing & educational content)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# After deploy, uncomment and set your canonical domain:
+# Sitemap: YOUR_PRODUCTION_ORIGIN/sitemap.xml

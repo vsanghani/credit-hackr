@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Clock } from 'lucide-react';
 import { getBlogPostByRouteParam } from '../data/blogsData';
-import { applyArticleSeo, resetToSiteDefaults } from '../utils/blogSeo';
+import { applyArticleSeo, resetToSiteDefaults } from '../utils/seo';
 import './BlogPost.css';
 
 const BlogPost = () => {

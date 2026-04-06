@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Check, AlertCircle } from 'lucide-react';
 import { useCards } from '../context/CardsContext';
 import CardArt from '../components/CardArt';
+import { applyCardDetailSeo, resetToSiteDefaults } from '../utils/seo';
 import './CardDetail.css';
 
 const CardDetail = () => {
@@ -9,11 +11,22 @@ const CardDetail = () => {
     const { cards } = useCards();
     const card = cards.find((c) => c.id === parseInt(id, 10));
 
+    useEffect(() => {
+        if (!card) {
+            resetToSiteDefaults();
+            return undefined;
+        }
+        applyCardDetailSeo(card);
+        return () => resetToSiteDefaults();
+    }, [card]);
+
     if (!card) {
         return (
             <div className="container not-found">
                 <h2>Card not found</h2>
-                <Link to="/" className="btn btn-primary">Back to Home</Link>
+                <Link to="/" className="btn btn-primary">
+                    Back to Home
+                </Link>
             </div>
         );
     }
@@ -35,7 +48,12 @@ const CardDetail = () => {
                         <h1>{card.name}</h1>
                         <p className="detail-description">{card.description}</p>
                         <div className="detail-cta">
-                            <a href={card.applyLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">
+                            <a
+                                href={card.applyLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-primary btn-lg"
+                            >
                                 Apply Now
                             </a>
                             <span className="secure-text">

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -14,9 +15,14 @@ import Changelog from './pages/Changelog'
 import CookieConsent from './components/CookieConsent'
 import ScrollToTop from './components/ScrollToTop'
 import { CardsProvider } from './context/CardsContext'
+import { injectSiteGraph } from './utils/seo'
 import './App.css'
 
 function App() {
+    useEffect(() => {
+        injectSiteGraph()
+    }, [])
+
     return (
         <CardsProvider>
             <Router>
