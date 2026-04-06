@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import Card from '../components/Card';
 import { useCards } from '../context/CardsContext';
+import { applyCardsListingSeo, resetToSiteDefaults } from '../utils/seo';
 import './Home.css';
 import './CardsPage.css';
 
@@ -11,6 +12,11 @@ const CardsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const location = useLocation();
+
+    useEffect(() => {
+        applyCardsListingSeo();
+        return () => resetToSiteDefaults();
+    }, []);
 
     useEffect(() => {
         // Parse query params for category or search
@@ -43,7 +49,7 @@ const CardsPage = () => {
     return (
         <div className="cards-page container">
             <div className="cards-page__toolbar">
-                <h2>Credit Cards</h2>
+                <h1 className="cards-page__title">Credit Cards</h1>
 
                 <label className="cards-filter-pill" htmlFor="cards-filter-input">
                     <Search className="cards-filter-pill__icon" size={18} strokeWidth={2} aria-hidden />

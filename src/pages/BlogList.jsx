@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 import { blogsData } from '../data/blogsData';
-import { applyBlogIndexSeo, resetToSiteDefaults } from '../utils/blogSeo';
+import { applyBlogIndexSeo, resetToSiteDefaults } from '../utils/seo';
 import './BlogList.css';
 
 const BlogList = () => {

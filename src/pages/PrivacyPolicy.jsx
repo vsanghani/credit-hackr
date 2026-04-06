@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { applyPrivacySeo, resetToSiteDefaults } from '../utils/seo';
 import './LegalDocument.css';
 
 const PrivacyPolicy = () => {
+    useEffect(() => {
+        applyPrivacySeo();
+        return () => resetToSiteDefaults();
+    }, []);
+
     return (
         <div className="legal-page">
             <div className="container">

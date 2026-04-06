@@ -1,5 +1,5 @@
 /**
- * Blog posts for Credit Hackr. Each entry includes SEO fields used by `blogSeo.js`
+ * Blog posts for Credit Hackr. Each entry includes SEO fields consumed by `utils/seo.js`.
  * (meta description, keywords, ISO dates, JSON-LD).
  */
 export const blogsData = [

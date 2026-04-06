@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { applySimplePageSeo, resetToSiteDefaults } from '../utils/blogSeo';
+import { applySimplePageSeo, resetToSiteDefaults } from '../utils/seo';
 import { parseChangelog } from '../utils/parseChangelog';
 import changelogSource from '../../CHANGELOG.md?raw';
 import './Changelog.css';
@@ -21,8 +21,13 @@ const Changelog = () => {
         applySimplePageSeo({
             title: 'Changelog',
             description:
-                'Credit Hackr product changelog: new features, blog and SEO updates, and notable changes over time.',
+                'Credit Hackr product changelog: new features, SEO updates, tools and editorial changes. Maintained for users, search engines and AI assistants indexing the site.',
             path: '/changelog',
+            keywords: [
+                'Credit Hackr changelog',
+                'product updates',
+                'release notes',
+            ],
         });
         return () => resetToSiteDefaults();
     }, []);

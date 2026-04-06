@@ -1,0 +1,33 @@
+# Credit Hackr
+
+> Credit Hackr is an Australian-focused consumer education site about credit cards. It publishes card listings for comparison, a rewards-vs-fee calculator, long-form editorial guides, and legal pages. Content is general information only—not personal financial product advice under Australian law. Users should confirm rates, fees and eligibility with issuers before applying.
+
+## Audience & scope
+
+- Primary geography: Australia (products and terminology are AU-oriented).
+- Topics: rewards points, Qantas/Velocity and bank programs, cashback, annual fees, travel insurance via cards, credit scores, balance transfers, supermarket loyalty stacks.
+
+## Key URLs (relative to site origin)
+
+- / — Home: search popular cards, navigate to directory.
+- /cards — Browse and filter the card directory (names, fees, earn rates, benefits shown for comparison).
+- /cards/{id} — Detail page for one card profile (educational summary; “Apply” links to the issuer).
+- /hackr — “HACKR Calculator”: estimate yearly points/cashback value minus annual fee (illustrative).
+- /blog — Guides index (frequent flyer, cashback vs points, insurance, credit scores, etc.).
+- /blog/{slug} — Individual guide (also supports legacy numeric id URLs).
+- /changelog — Product changelog mirroring repository CHANGELOG.md.
+- /privacy — Privacy Policy (Australian Privacy Act / APPs framing).
+- /terms — Terms of Use and limitations of service.
+
+## Technical
+
+- Single-page application (React); titles, descriptions, canonical URLs and JSON-LD are set client-side on navigation.
+- Static files: /robots.txt, /llms.txt (this file).
+
+## Operator
+
+- Site credit in footer: VRTX Labs (https://vrtxlabs.tech).
+
+## Contact
+
+- Use footer “Support” or operator site for enquiries; do not infer private support email from this file alone.

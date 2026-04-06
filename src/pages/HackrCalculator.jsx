@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react';
 import { Calculator, DollarSign, Award } from 'lucide-react';
 import { useCards } from '../context/CardsContext';
 import CardArt from '../components/CardArt';
+import { applyHackrCalculatorSeo, resetToSiteDefaults } from '../utils/seo';
 import './HackrCalculator.css';
 
 const HackrCalculator = () => {
     const { cards } = useCards();
     const [selectedCardId, setSelectedCardId] = useState('');
     const [monthlySpend, setMonthlySpend] = useState('');
+
+    useEffect(() => {
+        applyHackrCalculatorSeo();
+        return () => resetToSiteDefaults();
+    }, []);
 
     useEffect(() => {
         if (!cards.length) return;
