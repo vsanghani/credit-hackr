@@ -12,6 +12,7 @@ import CardsPage from './pages/CardsPage'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfUse from './pages/TermsOfUse'
 import Changelog from './pages/Changelog'
+import Dashboard from './pages/Dashboard'
 import CookieConsent from './components/CookieConsent'
 import ScrollToTop from './components/ScrollToTop'
 import { CardsProvider } from './context/CardsContext'
@@ -41,6 +42,7 @@ function App() {
                             <Route path="/privacy" element={<PrivacyPolicy />} />
                             <Route path="/terms" element={<TermsOfUse />} />
                             <Route path="/changelog" element={<Changelog />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
                         </Routes>
                     </main>
                     <Footer />

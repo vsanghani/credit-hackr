@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Cookie } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
 import './CookieConsent.css';
 
 const STORAGE_KEY = 'credit-hackr-cookie-consent';
@@ -22,6 +23,7 @@ const CookieConsent = () => {
         } catch {
             /* ignore */
         }
+        trackEvent('cookie_consent_accepted');
         setVisible(false);
     };
 

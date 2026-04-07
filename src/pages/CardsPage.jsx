@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import Card from '../components/Card';
 import { useCards } from '../context/CardsContext';
+import { trackEvent } from '../lib/analytics';
 import { applyCardsListingSeo, resetToSiteDefaults } from '../utils/seo';
 import './Home.css';
 import './CardsPage.css';
@@ -104,11 +105,33 @@ const CardsPage = () => {
 
     const toggleCompareCard = (id) => {
         setSelectedCompareIds((prev) => {
-            if (prev.includes(id)) return prev.filter((item) => item !== id);
-            if (prev.length >= 4) return prev;
+            if (prev.includes(id)) {
+                trackEvent('compare_removed', { cardId: id });
+                return prev.filter((item) => item !== id);
+            }
+            if (prev.length >= 4) {
+                trackEvent('compare_limit_reached', { attemptedCardId: id });
+                return prev;
+            }
+            trackEvent('compare_added', { cardId: id });
             return [...prev, id];
         });
     };
+
+    useEffect(() => {
+        trackEvent('cards_page_viewed');
+    }, []);
+
+    useEffect(() => {
+        trackEvent('cards_filters_changed', {
+            searchQuery,
+            selectedCategory,
+            maxAnnualFee,
+            maxInterestRate,
+            maxForeignFee,
+            resultCount: filteredCards.length
+        });
+    }, [searchQuery, selectedCategory, maxAnnualFee, maxInterestRate, maxForeignFee, filteredCards.length]);
 
     return (
         <div className="cards-page container">

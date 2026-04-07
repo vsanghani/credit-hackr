@@ -28,6 +28,10 @@ const Navbar = () => {
                         Blog
                     </Link>
 
+                    <Link to="/dashboard" className={`nav-link ${location.pathname.startsWith('/dashboard') ? 'active' : ''}`}>
+                        Dashboard
+                    </Link>
+
                     <div className="nav-dropdown-container">
                         <button
                             className="nav-link dropdown-trigger"
@@ -72,6 +76,9 @@ const Navbar = () => {
                     </Link>
                     <Link to="/blog" className="mobile-link" onClick={toggleMenu}>
                         Blog
+                    </Link>
+                    <Link to="/dashboard" className="mobile-link" onClick={toggleMenu}>
+                        Dashboard
                     </Link>
                     <div className="mobile-section">
                         <span className="mobile-section-title">Cards</span>
