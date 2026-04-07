@@ -11,6 +11,12 @@ const CardsPage = () => {
     const { cards } = useCards();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [maxAnnualFee, setMaxAnnualFee] = useState('');
+    const [maxInterestRate, setMaxInterestRate] = useState('');
+    const [maxForeignFee, setMaxForeignFee] = useState('');
+    const [apiCards, setApiCards] = useState([]);
+    const [useApiResults, setUseApiResults] = useState(false);
+    const [selectedCompareIds, setSelectedCompareIds] = useState([]);
     const location = useLocation();
 
     useEffect(() => {
@@ -29,7 +35,42 @@ const CardsPage = () => {
 
     }, [location.search]);
 
-    const filteredCards = useMemo(() => {
+    useEffect(() => {
+        let cancelled = false;
+        const controller = new AbortController();
+
+        async function loadFilteredCards() {
+            const params = new URLSearchParams();
+            if (searchQuery) params.set('search', searchQuery);
+            if (selectedCategory) params.set('category', selectedCategory);
+            if (maxAnnualFee !== '') params.set('maxAnnualFee', maxAnnualFee);
+            if (maxInterestRate !== '') params.set('maxInterestRate', maxInterestRate);
+            if (maxForeignFee !== '') params.set('maxForeignFee', maxForeignFee);
+
+            try {
+                const res = await fetch(`/api/cards?${params.toString()}`, {
+                    headers: { Accept: 'application/json' },
+                    signal: controller.signal
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!cancelled && Array.isArray(data)) {
+                    setApiCards(data);
+                    setUseApiResults(true);
+                }
+            } catch {
+                if (!cancelled) setUseApiResults(false);
+            }
+        }
+
+        loadFilteredCards();
+        return () => {
+            cancelled = true;
+            controller.abort();
+        };
+    }, [searchQuery, selectedCategory, maxAnnualFee, maxInterestRate, maxForeignFee]);
+
+    const localFilteredCards = useMemo(() => {
         const q = searchQuery.toLowerCase();
         return cards.filter((card) => {
             const issuer = (card.issuer || '').toLowerCase();
@@ -41,10 +82,33 @@ const CardsPage = () => {
                 issuer.includes(q);
 
             const matchesCategory = selectedCategory ? card.category === selectedCategory : true;
+            const matchesMaxAnnualFee = maxAnnualFee === '' ? true : card.fees?.annual <= Number(maxAnnualFee);
+            const matchesMaxInterestRate = maxInterestRate === '' ? true : card.interestRate <= Number(maxInterestRate);
+            const matchesMaxForeignFee = maxForeignFee === '' ? true : card.fees?.foreign <= Number(maxForeignFee);
 
-            return matchesSearch && matchesCategory;
+            return matchesSearch && matchesCategory && matchesMaxAnnualFee && matchesMaxInterestRate && matchesMaxForeignFee;
         });
-    }, [cards, searchQuery, selectedCategory]);
+    }, [cards, searchQuery, selectedCategory, maxAnnualFee, maxInterestRate, maxForeignFee]);
+
+    const filteredCards = useApiResults ? apiCards : localFilteredCards;
+
+    const compareCards = useMemo(
+        () => filteredCards.filter((card) => selectedCompareIds.includes(card.id)),
+        [filteredCards, selectedCompareIds]
+    );
+
+    const categories = useMemo(
+        () => [...new Set(cards.map((card) => card.category).filter(Boolean))].sort(),
+        [cards]
+    );
+
+    const toggleCompareCard = (id) => {
+        setSelectedCompareIds((prev) => {
+            if (prev.includes(id)) return prev.filter((item) => item !== id);
+            if (prev.length >= 4) return prev;
+            return [...prev, id];
+        });
+    };
 
     return (
         <div className="cards-page container">
@@ -65,13 +129,67 @@ const CardsPage = () => {
                     />
                 </label>
 
-                {(searchQuery || selectedCategory) && (
+                <select
+                    className="cards-page__select"
+                    aria-label="Filter by card category"
+                    value={selectedCategory || ''}
+                    onChange={(e) => setSelectedCategory(e.target.value || null)}
+                >
+                    <option value="">All categories</option>
+                    {categories.map((category) => (
+                        <option key={category} value={category}>
+                            {category}
+                        </option>
+                    ))}
+                </select>
+
+                <input
+                    className="cards-page__number-filter"
+                    type="number"
+                    min="0"
+                    step="1"
+                    inputMode="numeric"
+                    placeholder="Max annual fee ($)"
+                    value={maxAnnualFee}
+                    onChange={(e) => setMaxAnnualFee(e.target.value)}
+                    aria-label="Maximum annual fee"
+                />
+
+                <input
+                    className="cards-page__number-filter"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    inputMode="decimal"
+                    placeholder="Max interest rate (%)"
+                    value={maxInterestRate}
+                    onChange={(e) => setMaxInterestRate(e.target.value)}
+                    aria-label="Maximum interest rate"
+                />
+
+                <input
+                    className="cards-page__number-filter"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    inputMode="decimal"
+                    placeholder="Max foreign fee (%)"
+                    value={maxForeignFee}
+                    onChange={(e) => setMaxForeignFee(e.target.value)}
+                    aria-label="Maximum foreign transaction fee"
+                />
+
+                {(searchQuery || selectedCategory || maxAnnualFee || maxInterestRate || maxForeignFee) && (
                     <button
                         type="button"
                         className="btn btn-secondary btn-sm cards-page__clear"
                         onClick={() => {
                             setSearchQuery('');
                             setSelectedCategory(null);
+                            setMaxAnnualFee('');
+                            setMaxInterestRate('');
+                            setMaxForeignFee('');
+                            setSelectedCompareIds([]);
                             window.history.pushState({}, '', '/cards');
                         }}
                     >
@@ -88,7 +206,16 @@ const CardsPage = () => {
                 {filteredCards.length > 0 ? (
                     <div className="cards-grid">
                         {filteredCards.map(card => (
-                            <Card key={card.id} card={card} />
+                            <div key={card.id} className="cards-page__card-item">
+                                <Card card={card} />
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary btn-sm cards-page__compare-btn"
+                                    onClick={() => toggleCompareCard(card.id)}
+                                >
+                                    {selectedCompareIds.includes(card.id) ? 'Remove from compare' : 'Add to compare'}
+                                </button>
+                            </div>
                         ))}
                     </div>
                 ) : (
@@ -97,6 +224,58 @@ const CardsPage = () => {
                     </div>
                 )}
             </div>
+
+            {compareCards.length > 0 && (
+                <section className="glass cards-page__compare-wrap" aria-live="polite">
+                    <div className="cards-page__compare-header">
+                        <h2>Compare cards</h2>
+                        <p>Select up to 4 cards. Add at least 2 for side-by-side comparison.</p>
+                    </div>
+
+                    {compareCards.length >= 2 ? (
+                        <div className="cards-page__compare-table-wrap">
+                            <table className="cards-page__compare-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Field</th>
+                                        {compareCards.map((card) => (
+                                            <th scope="col" key={card.id}>{card.name}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Category</th>
+                                        {compareCards.map((card) => <td key={card.id}>{card.category}</td>)}
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Annual fee</th>
+                                        {compareCards.map((card) => <td key={card.id}>${card.fees?.annual ?? 'N/A'}</td>)}
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Interest rate</th>
+                                        {compareCards.map((card) => <td key={card.id}>{card.interestRate}%</td>)}
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Foreign fee</th>
+                                        {compareCards.map((card) => <td key={card.id}>{card.fees?.foreign}%</td>)}
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Earn rate</th>
+                                        {compareCards.map((card) => <td key={card.id}>{card.pointsRate}</td>)}
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Best feature</th>
+                                        {compareCards.map((card) => <td key={card.id}>{card.feature}</td>)}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <p className="cards-page__compare-hint">Choose one more card to view the comparison table.</p>
+                    )}
+                </section>
+            )}
         </div>
     );
 };
