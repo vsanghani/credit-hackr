@@ -5,6 +5,7 @@ import {
     enforceSameOriginForPost,
     safeJsonStringify
 } from './_security.js';
+import { requireAnalyticsBasicAuth } from './_auth.js';
 
 function parseBody(req) {
     if (!req.body) return {};
@@ -74,6 +75,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'GET') {
+        if (!requireAnalyticsBasicAuth(req, res)) return;
         if (!enforceRateLimit(req, res, 'events_get', 80, 60_000)) return;
 
         const daysRaw = Number.parseInt(req.query.days, 10);
