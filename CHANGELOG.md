@@ -14,6 +14,7 @@ Notable changes to **Credit Hackr** are listed here. This project follows semant
 - Event tracking pipeline: frontend tracking utility, backend events ingest/summary API (`/api/events`), events schema/indexes, and dashboard route (`/dashboard`) with totals and daily trends.
 - Recommendation system: quiz route (`/quiz`), ranking API (`POST /api/recommendations`), weighted scoring logic, top-pick explanations, and instrumentation for quiz funnel events.
 - Navigation updates for new product areas (Dashboard and Quiz links in desktop/mobile navbar).
+- Lead capture system: reusable signup component on Home, Cards, and Blog pages; backend endpoint (`POST /api/leads`) with DB upsert; lead schema/indexes; event instrumentation for submit/success/failure; and optional email integrations via `LEADS_WEBHOOK_URL` and Resend (`RESEND_API_KEY`, `LEADS_FROM_EMAIL`).
 
 ## [0.1.0] - 2026-04-06
 

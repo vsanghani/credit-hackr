@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 import { blogsData } from '../data/blogsData';
+import LeadCapture from '../components/LeadCapture';
 import { applyBlogIndexSeo, resetToSiteDefaults } from '../utils/seo';
 import './BlogList.css';
 
@@ -60,6 +61,12 @@ const BlogList = () => {
                         </article>
                     ))}
                 </div>
+
+                <LeadCapture
+                    sourceContext="blog_index_footer"
+                    title="Want new guides in your inbox?"
+                    description="Get notified when we publish new card strategy articles and market updates."
+                />
             </div>
         </div>
     );

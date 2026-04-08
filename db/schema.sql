@@ -23,3 +23,15 @@ CREATE TABLE IF NOT EXISTS recommendation_runs (
     payload JSONB NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS leads (
+    id BIGSERIAL PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    source_page TEXT,
+    source_context TEXT,
+    metadata JSONB,
+    subscribed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_leads_subscribed_at ON leads (subscribed_at DESC);
