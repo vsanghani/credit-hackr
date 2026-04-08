@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import CardArt from './CardArt';
+import { trackEvent } from '../lib/analytics';
 import './Card.css';
 
 const Card = ({ card }) => {
@@ -25,7 +26,11 @@ const Card = ({ card }) => {
                 </div>
 
                 <div className="card-actions">
-                    <Link to={`/cards/${card.id}`} className="btn btn-primary full-width">
+                    <Link
+                        to={`/cards/${card.id}`}
+                        className="btn btn-primary full-width"
+                        onClick={() => trackEvent('card_detail_opened', { cardId: card.id, cardName: card.name })}
+                    >
                         Get Info
                     </Link>
                 </div>
