@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ChevronRight } from 'lucide-react';
 import Card from '../components/Card';
+import LeadCapture from '../components/LeadCapture';
 import { useCards } from '../context/CardsContext';
 import { applyHomeSeo, resetToSiteDefaults } from '../utils/seo';
 import './Home.css';
@@ -70,6 +71,12 @@ const Home = () => {
                         </div>
                     ))}
                 </div>
+
+                <LeadCapture
+                    sourceContext="home_popular_section"
+                    title="Get weekly credit card opportunities"
+                    description="We send high-signal updates: offer changes, points promos, and practical tips."
+                />
             </section>
         </div>
     );

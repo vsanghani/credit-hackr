@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import Card from '../components/Card';
+import LeadCapture from '../components/LeadCapture';
 import { useCards } from '../context/CardsContext';
 import { trackEvent } from '../lib/analytics';
 import { applyCardsListingSeo, resetToSiteDefaults } from '../utils/seo';
@@ -299,6 +300,13 @@ const CardsPage = () => {
                     )}
                 </section>
             )}
+
+            <LeadCapture
+                sourceContext="cards_listing_footer"
+                title="Track fee and bonus updates"
+                description="Get notified when annual fees, bonuses, or key card features change."
+                compact
+            />
         </div>
     );
 };
