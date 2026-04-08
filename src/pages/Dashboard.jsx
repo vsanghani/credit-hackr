@@ -1,14 +1,29 @@
 import { useEffect, useMemo, useState } from 'react';
 import { trackEvent } from '../lib/analytics';
+import {
+    buildBasicAuthHeader,
+    clearStoredDashboardAuth,
+    getStoredDashboardAuth,
+    setStoredDashboardAuth
+} from '../lib/dashboardAuth';
 import './Dashboard.css';
 
 const Dashboard = () => {
     const [days, setDays] = useState(14);
+    const [authHeader, setAuthHeader] = useState(() => getStoredDashboardAuth());
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [data, setData] = useState({ totals: [], byDay: [] });
+    const [authError, setAuthError] = useState('');
 
     useEffect(() => {
+        if (!authHeader) {
+            setLoading(false);
+            return undefined;
+        }
+
         let cancelled = false;
         const controller = new AbortController();
 
@@ -17,9 +32,18 @@ const Dashboard = () => {
             setError('');
             try {
                 const res = await fetch(`/api/events?days=${days}`, {
-                    headers: { Accept: 'application/json' },
+                    headers: { Accept: 'application/json', Authorization: authHeader },
                     signal: controller.signal
                 });
+                if (res.status === 401) {
+                    clearStoredDashboardAuth();
+                    if (!cancelled) {
+                        setAuthHeader('');
+                        setData({ totals: [], byDay: [] });
+                        setAuthError('Authentication failed. Please try again.');
+                    }
+                    return;
+                }
                 if (!res.ok) throw new Error('Unable to fetch analytics summary');
                 const payload = await res.json();
                 if (!cancelled) setData({ totals: payload.totals || [], byDay: payload.byDay || [] });
@@ -35,7 +59,7 @@ const Dashboard = () => {
             cancelled = true;
             controller.abort();
         };
-    }, [days]);
+    }, [days, authHeader]);
 
     useEffect(() => {
         trackEvent('dashboard_viewed', { days });
@@ -45,6 +69,48 @@ const Dashboard = () => {
         () => data.totals.reduce((sum, event) => sum + Number(event.count || 0), 0),
         [data.totals]
     );
+
+    const submitAuth = (e) => {
+        e.preventDefault();
+        const header = buildBasicAuthHeader(username.trim(), password);
+        setStoredDashboardAuth(header);
+        setAuthHeader(header);
+        setAuthError('');
+        setPassword('');
+    };
+
+    if (!authHeader) {
+        return (
+            <div className="dashboard-page container">
+                <div className="dashboard-auth glass">
+                    <h1>Dashboard Access</h1>
+                    <p>Enter analytics credentials to view sensitive metrics.</p>
+                    <form onSubmit={submitAuth} className="dashboard-auth__form">
+                        <label htmlFor="dashboard-username">Username</label>
+                        <input
+                            id="dashboard-username"
+                            type="text"
+                            autoComplete="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                        <label htmlFor="dashboard-password">Password</label>
+                        <input
+                            id="dashboard-password"
+                            type="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button type="submit" className="btn btn-primary">Unlock dashboard</button>
+                    </form>
+                    {authError && <p className="dashboard-error">{authError}</p>}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="dashboard-page container">
@@ -58,6 +124,17 @@ const Dashboard = () => {
                         <option value={30}>Last 30 days</option>
                     </select>
                 </label>
+                <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => {
+                        clearStoredDashboardAuth();
+                        setAuthHeader('');
+                        setData({ totals: [], byDay: [] });
+                    }}
+                >
+                    Lock dashboard
+                </button>
             </div>
 
             {loading && <p className="dashboard-muted">Loading analytics...</p>}

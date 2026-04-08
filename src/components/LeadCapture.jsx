@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '../lib/analytics';
 import './LeadCapture.css';
@@ -12,6 +12,36 @@ const LeadCapture = ({
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState('idle');
     const [message, setMessage] = useState('');
+    const [captchaRequired, setCaptchaRequired] = useState(false);
+    const [captchaProvider, setCaptchaProvider] = useState('');
+    const [captchaSiteKey, setCaptchaSiteKey] = useState('');
+    const [captchaToken, setCaptchaToken] = useState('');
+
+    useEffect(() => {
+        window.onLeadCaptchaSolved = (token) => setCaptchaToken(token);
+        return () => {
+            if (window.onLeadCaptchaSolved) delete window.onLeadCaptchaSolved;
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!captchaRequired || !captchaSiteKey) return;
+
+        const ensureScript = (src) => {
+            if (document.querySelector(`script[src="${src}"]`)) return;
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        };
+
+        if (captchaProvider === 'turnstile') {
+            ensureScript('https://challenges.cloudflare.com/turnstile/v0/api.js');
+        } else if (captchaProvider === 'hcaptcha') {
+            ensureScript('https://js.hcaptcha.com/1/api.js');
+        }
+    }, [captchaRequired, captchaProvider, captchaSiteKey]);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -34,15 +64,28 @@ const LeadCapture = ({
                     sourcePage: window.location.pathname,
                     sourceContext,
                     // Honeypot field: should stay empty for real users.
-                    company: ''
+                    company: '',
+                    captchaToken
                 })
             });
 
-            if (!res.ok) throw new Error('Unable to subscribe');
+            const payload = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                if (res.status === 403 && payload.captchaRequired) {
+                    setCaptchaRequired(true);
+                    setCaptchaProvider(payload.captchaProvider || '');
+                    setCaptchaSiteKey(payload.captchaSiteKey || '');
+                    setMessage('Please complete the CAPTCHA challenge.');
+                    setStatus('error');
+                    return;
+                }
+                throw new Error('Unable to subscribe');
+            }
 
             setStatus('success');
-            setMessage('Thanks, you are subscribed.');
+            setMessage('Check your inbox to verify your email and complete subscription.');
             setEmail('');
+            setCaptchaToken('');
             trackEvent('lead_capture_success', { sourceContext });
         } catch {
             setStatus('error');
@@ -72,6 +115,36 @@ const LeadCapture = ({
                     {status === 'loading' ? 'Joining...' : 'Join free'}
                 </button>
             </form>
+            {captchaRequired && (
+                <div className="lead-capture__captcha">
+                    <p className="lead-capture__captcha-note">
+                        CAPTCHA required due to unusual traffic. Complete the challenge, then submit again.
+                    </p>
+                    {captchaProvider === 'turnstile' && captchaSiteKey ? (
+                        <div
+                            className="cf-turnstile"
+                            data-sitekey={captchaSiteKey}
+                            data-callback="onLeadCaptchaSolved"
+                        ></div>
+                    ) : null}
+                    {captchaProvider === 'hcaptcha' && captchaSiteKey ? (
+                        <div
+                            className="h-captcha"
+                            data-sitekey={captchaSiteKey}
+                            data-callback="onLeadCaptchaSolved"
+                        ></div>
+                    ) : null}
+                    {!captchaSiteKey ? (
+                        <input
+                            type="text"
+                            value={captchaToken}
+                            onChange={(e) => setCaptchaToken(e.target.value)}
+                            placeholder="Paste CAPTCHA token"
+                            aria-label="CAPTCHA token"
+                        />
+                    ) : null}
+                </div>
+            )}
             <p className="lead-capture__legal">
                 By subscribing, you agree to our <Link to="/privacy">Privacy Policy</Link>.
             </p>

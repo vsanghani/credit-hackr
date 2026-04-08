@@ -12,6 +12,12 @@ function getClientIp(req) {
     return req.socket?.remoteAddress || 'unknown';
 }
 
+export function getRequestOrigin(req) {
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    return `${proto}://${host}`;
+}
+
 export function applyApiSecurityHeaders(res) {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
@@ -68,4 +74,8 @@ export function safeJsonStringify(value, maxLength = 4000) {
     } catch {
         return JSON.stringify({});
     }
+}
+
+export function getClientIpAddress(req) {
+    return getClientIp(req);
 }
