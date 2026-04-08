@@ -1,4 +1,10 @@
 import { neon } from '@neondatabase/serverless';
+import {
+    applyApiSecurityHeaders,
+    enforceRateLimit,
+    enforceSameOriginForPost,
+    safeJsonStringify
+} from './_security.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -49,10 +55,14 @@ async function sendToWebhook(payload) {
 }
 
 export default async function handler(req, res) {
+    applyApiSecurityHeaders(res);
+
     if (req.method !== 'POST') {
         res.status(405).json({ error: 'Method not allowed' });
         return;
     }
+    if (!enforceSameOriginForPost(req, res)) return;
+    if (!enforceRateLimit(req, res, 'leads_post', 20, 60_000)) return;
 
     const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
     if (!databaseUrl) {
@@ -62,9 +72,15 @@ export default async function handler(req, res) {
 
     const body = parseBody(req);
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
-    const sourcePage = typeof body.sourcePage === 'string' ? body.sourcePage.trim() : '';
-    const sourceContext = typeof body.sourceContext === 'string' ? body.sourceContext.trim() : '';
+    const sourcePage = typeof body.sourcePage === 'string' ? body.sourcePage.trim().slice(0, 200) : '';
+    const sourceContext = typeof body.sourceContext === 'string' ? body.sourceContext.trim().slice(0, 100) : '';
     const metadata = body.metadata && typeof body.metadata === 'object' ? body.metadata : {};
+    const honeypot = typeof body.company === 'string' ? body.company.trim() : '';
+
+    if (honeypot) {
+        res.status(200).json({ ok: true });
+        return;
+    }
 
     if (!email || !EMAIL_REGEX.test(email)) {
         res.status(400).json({ error: 'Valid email is required' });
@@ -87,7 +103,7 @@ export default async function handler(req, res) {
 
         const rows = await sql`
             INSERT INTO leads (email, source_page, source_context, metadata)
-            VALUES (${email}, ${sourcePage || null}, ${sourceContext || null}, ${JSON.stringify(metadata)})
+            VALUES (${email}, ${sourcePage || null}, ${sourceContext || null}, ${safeJsonStringify(metadata)})
             ON CONFLICT (email)
             DO UPDATE SET
                 source_page = EXCLUDED.source_page,

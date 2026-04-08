@@ -32,7 +32,9 @@ const LeadCapture = ({
                 body: JSON.stringify({
                     email: normalized,
                     sourcePage: window.location.pathname,
-                    sourceContext
+                    sourceContext,
+                    // Honeypot field: should stay empty for real users.
+                    company: ''
                 })
             });
 

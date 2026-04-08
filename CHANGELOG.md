@@ -15,6 +15,7 @@ Notable changes to **Credit Hackr** are listed here. This project follows semant
 - Recommendation system: quiz route (`/quiz`), ranking API (`POST /api/recommendations`), weighted scoring logic, top-pick explanations, and instrumentation for quiz funnel events.
 - Navigation updates for new product areas (Dashboard and Quiz links in desktop/mobile navbar).
 - Lead capture system: reusable signup component on Home, Cards, and Blog pages; backend endpoint (`POST /api/leads`) with DB upsert; lead schema/indexes; event instrumentation for submit/success/failure; and optional email integrations via `LEADS_WEBHOOK_URL` and Resend (`RESEND_API_KEY`, `LEADS_FROM_EMAIL`).
+- Security hardening pass: added strict security headers (including CSP via `vercel.json`), shared API security helpers, per-endpoint rate limits, same-origin enforcement for POST APIs, stronger request validation/sanitization, safer metadata serialization, and a honeypot field for lead-capture bot reduction.
 
 ## [0.1.0] - 2026-04-06
 
