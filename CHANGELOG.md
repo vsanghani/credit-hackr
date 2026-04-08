@@ -17,6 +17,7 @@ Notable changes to **Credit Hackr** are listed here. This project follows semant
 - Lead capture system: reusable signup component on Home, Cards, and Blog pages; backend endpoint (`POST /api/leads`) with DB upsert; lead schema/indexes; event instrumentation for submit/success/failure; and optional email integrations via `LEADS_WEBHOOK_URL` and Resend (`RESEND_API_KEY`, `LEADS_FROM_EMAIL`).
 - Security hardening pass: added strict security headers (including CSP via `vercel.json`), shared API security helpers, per-endpoint rate limits, same-origin enforcement for POST APIs, stronger request validation/sanitization, safer metadata serialization, and a honeypot field for lead-capture bot reduction.
 - Sensitive-route protection: added Basic Auth support for analytics using `ANALYTICS_AUTH_USER` and `ANALYTICS_AUTH_PASS`, enforced authentication on `GET /api/events`, and gated `/dashboard` behind an in-app credential prompt with session-scoped auth storage and lock/logout control.
+- Lead-abuse controls upgrade: implemented double opt-in subscription flow with expiring verification tokens and a secure verification endpoint (`/api/leads-verify`), plus adaptive CAPTCHA challenges for suspicious lead traffic with optional Cloudflare Turnstile or hCaptcha server-side validation.
 
 ## [0.1.0] - 2026-04-06
 

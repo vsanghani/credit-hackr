@@ -30,8 +30,13 @@ CREATE TABLE IF NOT EXISTS leads (
     source_page TEXT,
     source_context TEXT,
     metadata JSONB,
+    status TEXT NOT NULL DEFAULT 'pending',
+    verify_token_hash TEXT,
+    verify_token_expires_at TIMESTAMPTZ,
+    verified_at TIMESTAMPTZ,
     subscribed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_leads_subscribed_at ON leads (subscribed_at DESC);
+CREATE INDEX IF NOT EXISTS idx_leads_status ON leads (status);
