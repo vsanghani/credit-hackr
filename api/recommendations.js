@@ -1,5 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { cardsData as staticCards } from '../src/data/cardsData.js';
+import { applyApiSecurityHeaders, enforceRateLimit, enforceSameOriginForPost } from './_security.js';
 
 function toNumber(value, fallback = 0) {
     const n = Number(value);
@@ -107,16 +108,26 @@ async function loadCards() {
 }
 
 export default async function handler(req, res) {
+    applyApiSecurityHeaders(res);
+
     if (req.method !== 'POST') {
         res.status(405).json({ error: 'Method not allowed' });
         return;
     }
+    if (!enforceSameOriginForPost(req, res)) return;
+    if (!enforceRateLimit(req, res, 'recommendations_post', 30, 60_000)) return;
 
-    const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+    let body = {};
+    try {
+        body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+    } catch {
+        res.status(400).json({ error: 'Invalid JSON body' });
+        return;
+    }
     const profile = {
-        monthlySpend: toNumber(body.monthlySpend, 0),
-        rewardsPreference: body.rewardsPreference || 'either',
-        annualFeeTolerance: body.annualFeeTolerance || 'medium',
+        monthlySpend: Math.min(Math.max(toNumber(body.monthlySpend, 0), 0), 100000),
+        rewardsPreference: ['points', 'cashback', 'either'].includes(body.rewardsPreference) ? body.rewardsPreference : 'either',
+        annualFeeTolerance: ['low', 'medium', 'high'].includes(body.annualFeeTolerance) ? body.annualFeeTolerance : 'medium',
         wantsTravelPerks: Boolean(body.wantsTravelPerks),
         foreignFeeSensitive: Boolean(body.foreignFeeSensitive),
         carriesBalance: Boolean(body.carriesBalance)

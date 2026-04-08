@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { applyApiSecurityHeaders, enforceRateLimit } from './_security.js';
 
 function parseNumberParam(value) {
     if (value === null || value === undefined || value === '') return null;
@@ -28,10 +29,13 @@ function matchesSearch(card, search) {
 }
 
 export default async function handler(req, res) {
+    applyApiSecurityHeaders(res);
+
     if (req.method !== 'GET') {
         res.status(405).json({ error: 'Method not allowed' });
         return;
     }
+    if (!enforceRateLimit(req, res, 'cards_get', 120, 60_000)) return;
 
     const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
     if (!databaseUrl) {

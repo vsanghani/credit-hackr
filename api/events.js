@@ -1,4 +1,10 @@
 import { neon } from '@neondatabase/serverless';
+import {
+    applyApiSecurityHeaders,
+    enforceRateLimit,
+    enforceSameOriginForPost,
+    safeJsonStringify
+} from './_security.js';
 
 function parseBody(req) {
     if (!req.body) return {};
@@ -13,6 +19,8 @@ function parseBody(req) {
 }
 
 export default async function handler(req, res) {
+    applyApiSecurityHeaders(res);
+
     const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
     if (!databaseUrl) {
         res.status(503).json({ error: 'Database not configured' });
@@ -38,12 +46,15 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
+        if (!enforceSameOriginForPost(req, res)) return;
+        if (!enforceRateLimit(req, res, 'events_post', 120, 60_000)) return;
+
         const body = parseBody(req);
         const eventName = typeof body.eventName === 'string' ? body.eventName.trim() : '';
         const sourcePage = typeof body.sourcePage === 'string' ? body.sourcePage.trim() : '';
         const metadata = body.metadata && typeof body.metadata === 'object' ? body.metadata : {};
 
-        if (!eventName) {
+        if (!eventName || eventName.length > 80 || !/^[a-z0-9_]+$/i.test(eventName)) {
             res.status(400).json({ error: 'eventName is required' });
             return;
         }
@@ -51,7 +62,7 @@ export default async function handler(req, res) {
         try {
             await sql`
                 INSERT INTO events (event_name, source_page, metadata)
-                VALUES (${eventName}, ${sourcePage || null}, ${JSON.stringify(metadata)})
+                VALUES (${eventName}, ${sourcePage.slice(0, 200) || null}, ${safeJsonStringify(metadata)})
             `;
             res.status(201).json({ ok: true });
             return;
@@ -63,6 +74,8 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'GET') {
+        if (!enforceRateLimit(req, res, 'events_get', 80, 60_000)) return;
+
         const daysRaw = Number.parseInt(req.query.days, 10);
         const days = Number.isInteger(daysRaw) ? Math.min(Math.max(daysRaw, 1), 90) : 14;
 
